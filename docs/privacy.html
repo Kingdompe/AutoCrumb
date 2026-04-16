@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — AutoCrumb</title>
+  <link rel="icon" type="image/png" href="../icons/icon32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0b0e17;
+      --bg-2: #0f1221;
+      --bg-3: #1a1d2e;
+      --fg: #e2e6f0;
+      --fg-bright: #f4f5f9;
+      --fg-dim: #b8bdd0;
+      --muted: #7a819a;
+      --accent: #6c5ce7;
+      --border: rgba(148, 163, 184, 0.12);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      background: var(--bg);
+      color: var(--fg);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--fg-bright);
+      letter-spacing: -0.03em;
+    }
+    a { color: var(--accent); }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    .header {
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    .header .container { display: flex; align-items: center; gap: 10px; }
+    .brand-icon {
+      width: 28px; height: 28px; background: var(--accent);
+      border-radius: 6px; display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 11px; color: white;
+    }
+    .brand-name { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 15px; color: var(--fg-bright); text-decoration: none; }
+
+    .content { padding: 48px 0 80px; }
+    h1 { font-size: 32px; margin-bottom: 8px; }
+    .updated { font-size: 14px; color: var(--muted); margin-bottom: 32px; }
+    h2 { font-size: 20px; margin: 32px 0 12px; }
+    p { margin-bottom: 16px; color: var(--fg-dim); }
+    ul { margin: 0 0 16px 24px; color: var(--fg-dim); }
+    li { margin-bottom: 6px; }
+    strong { color: var(--fg-bright); }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .footer a { color: var(--muted); margin: 0 10px; }
+    .footer a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="brand-icon">AC</div>
+      <a href="index.html" class="brand-name">AutoCrumb</a>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="container">
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: April 16, 2026</p>
+
+      <h2>Summary</h2>
+      <p><strong>AutoCrumb collects no data. There is no server. Everything runs locally in your browser.</strong></p>
+
+      <h2>What data does AutoCrumb access?</h2>
+      <p>AutoCrumb accesses the following browser data solely to perform its core function (automatic cookie deletion):</p>
+      <ul>
+        <li><strong>Cookies</strong> — to read and delete cookies for domains when their tabs are closed</li>
+        <li><strong>Tab URLs</strong> — to track which domains are currently open, so we know when to trigger cleanup</li>
+        <li><strong>Your whitelist/greylist rules</strong> — stored in Chrome's built-in sync storage so they follow you across devices</li>
+        <li><strong>Activity logs and statistics</strong> — stored locally on your machine</li>
+      </ul>
+
+      <h2>What data does AutoCrumb send externally?</h2>
+      <p><strong>None.</strong> AutoCrumb makes zero network requests. There is no server, no API, no analytics, no telemetry. Your browsing data never leaves your machine.</p>
+
+      <h2>What data does AutoCrumb store?</h2>
+      <p>All data is stored using Chrome's built-in storage APIs:</p>
+      <ul>
+        <li><strong>chrome.storage.sync</strong> — Your whitelist/greylist rules and settings. Synced by Chrome across your devices (encrypted by Google).</li>
+        <li><strong>chrome.storage.local</strong> — Activity logs and cleanup statistics. Stays on your current device.</li>
+        <li><strong>chrome.storage.session</strong> — Temporary runtime state (which tabs are open). Cleared when you close Chrome.</li>
+      </ul>
+
+      <h2>Third-party services</h2>
+      <p>AutoCrumb uses no third-party services, libraries, or analytics. The extension is fully self-contained.</p>
+
+      <h2>Permissions explained</h2>
+      <ul>
+        <li><strong>cookies</strong> — Read and delete cookies (core functionality)</li>
+        <li><strong>tabs</strong> — Know which sites are open so we only clean after all tabs for a domain close</li>
+        <li><strong>storage</strong> — Save your rules and settings</li>
+        <li><strong>alarms</strong> — Schedule delayed cleanup after tab close</li>
+        <li><strong>contextMenus</strong> — Add right-click "Whitelist/Greylist" options</li>
+        <li><strong>notifications</strong> — Show cleanup notifications (optional, can be disabled)</li>
+        <li><strong>browsingData</strong> — Clear localStorage/IndexedDB/Cache (optional, disabled by default)</li>
+        <li><strong>&lt;all_urls&gt;</strong> — Required to access cookies for any website. We do NOT read page content or inject scripts.</li>
+      </ul>
+
+      <h2>Open source</h2>
+      <p>AutoCrumb is open source under the MIT license. You can inspect every line of code at <a href="https://github.com/Kingdompe/AutoCrumb" target="_blank">github.com/Kingdompe/AutoCrumb</a>.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about this policy? Open an issue on <a href="https://github.com/Kingdompe/AutoCrumb/issues" target="_blank">GitHub</a>.</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      AutoCrumb &middot; MIT License
+      <br>
+      <a href="index.html">Home</a>
+      <a href="https://github.com/Kingdompe/AutoCrumb" target="_blank">GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>
