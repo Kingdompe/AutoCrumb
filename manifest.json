@@ -1,0 +1,55 @@
+{
+  "manifest_version": 3,
+  "name": "AutoCrumb — Auto Delete Cookies on Tab Close",
+  "short_name": "AutoCrumb",
+  "version": "1.0.0",
+  "description": "Automatically delete cookies when you close tabs. Whitelist sites you trust, greylist temporary sessions. Privacy made simple.",
+  "permissions": [
+    "cookies",
+    "tabs",
+    "storage",
+    "alarms",
+    "contextMenus",
+    "notifications",
+    "browsingData"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_page": "options/options.html",
+  "commands": {
+    "toggle-active": {
+      "suggested_key": { "default": "Alt+Shift+C" },
+      "description": "Toggle AutoCrumb on/off"
+    },
+    "whitelist-current": {
+      "suggested_key": { "default": "Alt+Shift+W" },
+      "description": "Whitelist current site"
+    },
+    "clean-now": {
+      "suggested_key": { "default": "Alt+Shift+X" },
+      "description": "Clean cookies now"
+    }
+  },
+  "default_locale": "en",
+  "minimum_chrome_version": "116"
+}

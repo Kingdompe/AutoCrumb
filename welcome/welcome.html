@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="welcome.css">
+  <title>Welcome to AutoCrumb</title>
+</head>
+<body>
+  <div class="welcome">
+    <!-- Progress bar -->
+    <div class="progress-bar">
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-steps">
+        <button class="step-dot active" data-step="0"></button>
+        <button class="step-dot" data-step="1"></button>
+        <button class="step-dot" data-step="2"></button>
+        <button class="step-dot" data-step="3"></button>
+      </div>
+    </div>
+
+    <!-- Steps container -->
+    <div class="steps-container">
+
+      <!-- Step 0: Welcome -->
+      <section class="step active" data-step="0">
+        <div class="step-icon">
+          <img src="../icons/icon128.png" alt="AutoCrumb" width="80" height="80" style="border-radius: 20px;">
+        </div>
+        <h1>Welcome to AutoCrumb</h1>
+        <p class="step-desc">Auto delete cookies when you close tabs. Privacy made simple.</p>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon feature-icon--purple">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </div>
+            <h3>Auto-Clean</h3>
+            <p>Cookies are deleted automatically when you close a tab</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon feature-icon--green">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Whitelist</h3>
+            <p>Protect cookies for sites you trust with one click</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon feature-icon--yellow">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3>Greylist</h3>
+            <p>Temporary protection for shopping or banking sessions</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 1: Quick setup -->
+      <section class="step" data-step="1">
+        <div class="step-icon-small">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#00d68f"/>
+          </svg>
+        </div>
+        <h1>Protect Your Essential Sites</h1>
+        <p class="step-desc">Add sites you always want to stay logged into. You can change these anytime in settings.</p>
+
+        <div class="quick-add-list">
+          <label class="quick-add-item">
+            <input type="checkbox" class="quick-add-check" data-domain="*.google.com" checked>
+            <span class="quick-add-domain">*.google.com</span>
+            <span class="quick-add-hint">Gmail, Drive, YouTube</span>
+          </label>
+          <label class="quick-add-item">
+            <input type="checkbox" class="quick-add-check" data-domain="*.github.com" checked>
+            <span class="quick-add-domain">*.github.com</span>
+            <span class="quick-add-hint">Stay signed in</span>
+          </label>
+          <label class="quick-add-item">
+            <input type="checkbox" class="quick-add-check" data-domain="*.microsoft.com">
+            <span class="quick-add-domain">*.microsoft.com</span>
+            <span class="quick-add-hint">Outlook, Office, Teams</span>
+          </label>
+          <label class="quick-add-item">
+            <input type="checkbox" class="quick-add-check" data-domain="*.amazon.com">
+            <span class="quick-add-domain">*.amazon.com</span>
+            <span class="quick-add-hint">Shopping cart, orders</span>
+          </label>
+          <label class="quick-add-item">
+            <input type="checkbox" class="quick-add-check" data-domain="*.reddit.com">
+            <span class="quick-add-domain">*.reddit.com</span>
+            <span class="quick-add-hint">Stay signed in</span>
+          </label>
+          <label class="quick-add-item">
+            <input type="checkbox" class="quick-add-check" data-domain="*.twitter.com">
+            <span class="quick-add-domain">*.twitter.com</span>
+            <span class="quick-add-hint">Stay signed in</span>
+          </label>
+        </div>
+
+        <div class="custom-add">
+          <input type="text" id="custom-domain" class="input" placeholder="Add another domain (e.g. mybank.com)">
+          <button id="btn-custom-add" class="btn btn-secondary">Add</button>
+        </div>
+      </section>
+
+      <!-- Step 2: How it works -->
+      <section class="step" data-step="2">
+        <div class="step-icon-small">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#6c5ce7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <h1>How AutoCrumb Works</h1>
+        <p class="step-desc">Simple, automatic, and respectful of your workflow.</p>
+
+        <div class="how-it-works">
+          <div class="how-step">
+            <div class="how-number">1</div>
+            <div class="how-content">
+              <h3>Browse normally</h3>
+              <p>While a tab is open, its cookies are safe. No interruptions.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="how-number">2</div>
+            <div class="how-content">
+              <h3>Close a tab</h3>
+              <p>AutoCrumb waits 15 seconds (configurable), then checks if any other tab uses the same domain.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="how-number">3</div>
+            <div class="how-content">
+              <h3>Cookies cleaned</h3>
+              <p>If no tab is open for that domain and it's not whitelisted, cookies are deleted. A badge shows the count.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <strong>Pro tip:</strong> Right-click any page to quickly whitelist or greylist it. Or use <kbd>Alt+Shift+W</kbd> to whitelist instantly.
+        </div>
+      </section>
+
+      <!-- Step 3: Ready -->
+      <section class="step" data-step="3">
+        <div class="step-icon-small">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#00d68f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h1>You're All Set!</h1>
+        <p class="step-desc">AutoCrumb is now active and protecting your privacy.</p>
+
+        <div class="ready-cards">
+          <div class="ready-card">
+            <div class="ready-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <span>Customize settings</span>
+          </div>
+          <div class="ready-card">
+            <div class="ready-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </div>
+            <span>Badge shows cookie count</span>
+          </div>
+          <div class="ready-card">
+            <div class="ready-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </div>
+            <span>Click the icon to clean manually</span>
+          </div>
+        </div>
+
+        <p class="migrating-note">
+          <strong>Migrating from Cookie AutoDelete?</strong><br>
+          Go to Settings &rarr; Import / Export to import your rules.
+        </p>
+      </section>
+
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-buttons">
+      <button id="btn-back" class="btn btn-secondary hidden">Back</button>
+      <div class="spacer"></div>
+      <button id="btn-skip" class="btn btn-text">Skip setup</button>
+      <button id="btn-next" class="btn btn-primary">Get Started</button>
+    </div>
+  </div>
+
+  <script src="welcome.js" type="module"></script>
+</body>
+</html>

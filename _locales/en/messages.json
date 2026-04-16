@@ -1,0 +1,8 @@
+{
+  "appName": {
+    "message": "AutoCrumb — Auto Delete Cookies on Tab Close"
+  },
+  "appDescription": {
+    "message": "Automatically delete cookies when you close tabs. Whitelist sites you trust, greylist temporary sessions. Privacy made simple."
+  }
+}

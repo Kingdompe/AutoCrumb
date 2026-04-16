@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="options.css">
+  <title>AutoCrumb Settings</title>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-brand">
+        <img src="../icons/icon32.png" alt="" class="sidebar-logo">
+        <span class="sidebar-title">AutoCrumb</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li><a href="#" class="nav-link active" data-tab="expressions">Rules</a></li>
+        <li><a href="#" class="nav-link" data-tab="settings">Settings</a></li>
+        <li><a href="#" class="nav-link" data-tab="sitedata">Site Data</a></li>
+        <li><a href="#" class="nav-link" data-tab="importexport">Import / Export</a></li>
+        <li><a href="#" class="nav-link" data-tab="stats">Statistics</a></li>
+        <li><a href="#" class="nav-link" data-tab="about">About</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main content -->
+    <main class="content">
+
+      <!-- Expressions tab -->
+      <section id="tab-expressions" class="tab-panel active">
+        <h1>Rules</h1>
+        <p class="subtitle">Manage your whitelist and greylist expressions. Whitelisted domains never have cookies deleted. Greylisted domains are protected while the browser is open.</p>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>Add Expression</h2>
+          </div>
+          <div class="card-body">
+            <div class="add-expression-form">
+              <input type="text" id="input-expression" class="input" placeholder="e.g. github.com or *.google.com">
+              <select id="select-type" class="select">
+                <option value="whitelist">Whitelist</option>
+                <option value="greylist">Greylist</option>
+              </select>
+              <button id="btn-add" class="btn btn-primary">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>Expression List</h2>
+            <div class="card-actions">
+              <input type="text" id="input-filter" class="input input-sm" placeholder="Filter...">
+            </div>
+          </div>
+          <div class="card-body no-padding">
+            <table class="table" id="expressions-table">
+              <thead>
+                <tr>
+                  <th>Pattern</th>
+                  <th>Type</th>
+                  <th>Added</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="expressions-tbody">
+                <tr class="empty-row"><td colspan="4">No expressions yet. Add one above or right-click any page.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings tab -->
+      <section id="tab-settings" class="tab-panel">
+        <h1>Settings</h1>
+        <p class="subtitle">Configure automatic cookie cleanup behavior.</p>
+
+        <div class="card">
+          <h2>Auto-Clean</h2>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Enable Automatic Cleaning</div>
+              <div class="setting-desc">Delete cookies when you close tabs for non-listed domains</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="setting-enabled"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Cleanup Delay</div>
+              <div class="setting-desc">Wait this many seconds before deleting cookies after a tab closes</div>
+            </div>
+            <div class="setting-control">
+              <input type="number" id="setting-cleanupDelay" class="input input-sm input-number" min="0" max="3600" value="15">
+              <span class="setting-unit">sec</span>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Clean on Domain Change</div>
+              <div class="setting-desc">Also clean when you navigate to a different domain within the same tab</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="setting-cleanOnDomainChange"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Clean on Browser Startup</div>
+              <div class="setting-desc">Delete cookies for non-whitelisted sites when Chrome starts</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="setting-cleanOnStartup"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Clean Expired Cookies</div>
+              <div class="setting-desc">Automatically remove expired cookies periodically</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="setting-cleanExpiredCookies"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Interface</h2>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Show Notifications</div>
+              <div class="setting-desc">Display a notification after each automatic cleanup</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="setting-showNotifications"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Show Cookie Count Badge</div>
+              <div class="setting-desc">Display the number of cookies on the extension icon</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="setting-showBadgeCount"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Enable Context Menus</div>
+              <div class="setting-desc">Add "Whitelist / Greylist" options to right-click menus</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="setting-enableContextMenus"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Site Data tab -->
+      <section id="tab-sitedata" class="tab-panel">
+        <h1>Site Data Cleanup</h1>
+        <p class="subtitle">Optionally clean additional site data when cookies are deleted. These are more aggressive — enable only if needed.</p>
+
+        <div class="card">
+          <h2>Additional Data Types</h2>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Clean LocalStorage</div>
+              <div class="setting-desc">Remove localStorage data for cleaned domains</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="setting-cleanLocalStorage"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Clean IndexedDB</div>
+              <div class="setting-desc">Remove IndexedDB databases for cleaned domains</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="setting-cleanIndexedDB"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Clean Cache Storage</div>
+              <div class="setting-desc">Remove cached resources for cleaned domains</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="setting-cleanCache"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Clean Service Workers</div>
+              <div class="setting-desc">Unregister service workers for cleaned domains</div>
+            </div>
+            <label class="toggle"><input type="checkbox" id="setting-cleanServiceWorkers"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Import/Export tab -->
+      <section id="tab-importexport" class="tab-panel">
+        <h1>Import / Export</h1>
+        <p class="subtitle">Back up your rules or migrate from Cookie AutoDelete.</p>
+
+        <div class="card">
+          <h2>Export</h2>
+          <p class="card-desc">Download all your rules and settings as a JSON file.</p>
+          <button id="btn-export" class="btn btn-primary">Export Data</button>
+        </div>
+
+        <div class="card">
+          <h2>Import</h2>
+          <p class="card-desc">Import rules from an AutoCrumb backup or a Cookie AutoDelete export. Existing rules are preserved — only new ones are added.</p>
+          <div class="import-area">
+            <input type="file" id="input-import" accept=".json" class="input-file">
+            <label for="input-import" class="btn btn-secondary">Choose JSON File</label>
+            <span id="import-status" class="import-status"></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Reset</h2>
+          <p class="card-desc">Clear all expressions and reset settings to defaults. This cannot be undone.</p>
+          <button id="btn-reset" class="btn btn-danger">Reset Everything</button>
+        </div>
+      </section>
+
+      <!-- Stats tab -->
+      <section id="tab-stats" class="tab-panel">
+        <h1>Statistics</h1>
+        <p class="subtitle">Overview of AutoCrumb's cleanup activity.</p>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-label">Cookies Deleted</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-cleanups">0</div>
+            <div class="stat-label">Total Cleanups</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-domains">0</div>
+            <div class="stat-label">Domains Cleaned</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-rules">0</div>
+            <div class="stat-label">Active Rules</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Top Domains</h2>
+          <div id="top-domains" class="top-domains">
+            <div class="empty-state">No data yet</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Activity Log</h2>
+          <div id="full-activity-log" class="activity-log-full">
+            <div class="empty-state">No activity yet</div>
+          </div>
+          <button id="btn-clear-log" class="btn btn-secondary btn-sm-block">Clear Log</button>
+        </div>
+      </section>
+
+      <!-- About tab -->
+      <section id="tab-about" class="tab-panel">
+        <h1>About AutoCrumb</h1>
+
+        <div class="card about-card">
+          <div class="about-logo">
+            <img src="../icons/icon128.png" alt="AutoCrumb" width="64" height="64">
+          </div>
+          <h2>AutoCrumb</h2>
+          <p class="about-version">Version 1.0.0</p>
+          <p class="about-desc">Auto Delete Cookies on Tab Close. Privacy made simple.</p>
+          <p class="about-desc">AutoCrumb automatically cleans cookies when you close tabs, keeping your browsing private without breaking the sites you use daily.</p>
+
+          <div class="about-links">
+            <h3>Keyboard Shortcuts</h3>
+            <div class="shortcut-row">
+              <kbd>Alt+Shift+C</kbd>
+              <span>Toggle AutoCrumb on/off</span>
+            </div>
+            <div class="shortcut-row">
+              <kbd>Alt+Shift+W</kbd>
+              <span>Whitelist current site</span>
+            </div>
+            <div class="shortcut-row">
+              <kbd>Alt+Shift+X</kbd>
+              <span>Clean cookies now</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="options.js" type="module"></script>
+</body>
+</html>

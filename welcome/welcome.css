@@ -1,0 +1,406 @@
+/* AutoCrumb Welcome — Premium onboarding experience */
+
+:root {
+  --bg-primary: #0f1117;
+  --bg-secondary: #1a1d27;
+  --bg-tertiary: #242836;
+  --bg-hover: #2a2f3e;
+  --text-primary: #e8eaed;
+  --text-secondary: #9aa0b0;
+  --text-muted: #636981;
+  --border: #2a2f3e;
+  --accent: #6c5ce7;
+  --accent-hover: #7c6ef7;
+  --accent-bg: rgba(108, 92, 231, 0.1);
+  --green: #00d68f;
+  --green-bg: rgba(0, 214, 143, 0.12);
+  --yellow: #ffaa00;
+  --yellow-bg: rgba(255, 170, 0, 0.12);
+  --red: #ff6b6b;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --transition: 200ms ease;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome {
+  width: 100%;
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+/* ─── Progress Bar ──────────────────────────────────────────────────── */
+
+.progress-bar {
+  margin-bottom: 40px;
+}
+
+.progress-track {
+  height: 3px;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all var(--transition);
+  padding: 0;
+}
+
+.step-dot.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.step-dot.current {
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.3);
+}
+
+/* ─── Steps ─────────────────────────────────────────────────────────── */
+
+.steps-container {
+  min-height: 420px;
+}
+
+.step {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.step.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.step-icon {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.step-icon-small {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+  letter-spacing: -0.03em;
+}
+
+.step-desc {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 15px;
+  margin-bottom: 28px;
+  max-width: 460px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ─── Features Grid ─────────────────────────────────────────────────── */
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.feature-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  text-align: center;
+  transition: all var(--transition);
+}
+
+.feature-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.feature-icon--purple { background: var(--accent-bg); color: var(--accent); }
+.feature-icon--green { background: var(--green-bg); color: var(--green); }
+.feature-icon--yellow { background: var(--yellow-bg); color: var(--yellow); }
+
+.feature-card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.feature-card p {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ─── Quick Add List ────────────────────────────────────────────────── */
+
+.quick-add-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.quick-add-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.quick-add-item:hover {
+  border-color: var(--accent);
+}
+
+.quick-add-check {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.quick-add-domain {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.quick-add-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.custom-add {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 9px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.input:focus { border-color: var(--accent); }
+
+/* ─── How It Works ──────────────────────────────────────────────────── */
+
+.how-it-works {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.how-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.how-number {
+  width: 32px;
+  height: 32px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.how-content h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.how-content p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.tip-box {
+  background: var(--accent-bg);
+  border: 1px solid rgba(108, 92, 231, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.tip-box strong { color: var(--accent); }
+
+kbd {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+/* ─── Ready Cards ───────────────────────────────────────────────────── */
+
+.ready-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.ready-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.ready-card:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.ready-icon {
+  color: var(--accent);
+}
+
+.ready-card span {
+  font-size: 14px;
+}
+
+.migrating-note {
+  background: var(--yellow-bg);
+  border: 1px solid rgba(255, 170, 0, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.migrating-note strong { color: var(--yellow); }
+
+/* ─── Navigation Buttons ────────────────────────────────────────────── */
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.spacer { flex: 1; }
+.hidden { display: none !important; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+.btn-primary:hover { background: var(--accent-hover); }
+
+.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--bg-hover); }
+
+.btn-text {
+  background: none;
+  color: var(--text-muted);
+}
+.btn-text:hover { color: var(--text-secondary); }

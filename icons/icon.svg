@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6c5ce7"/>
+      <stop offset="100%" style="stop-color:#a29bfe"/>
+    </linearGradient>
+    <linearGradient id="crumb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#e8e4ff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded square background -->
+  <rect x="4" y="4" width="120" height="120" rx="28" ry="28" fill="url(#bg)"/>
+
+  <!-- Cookie shape - circle with bite taken out -->
+  <circle cx="64" cy="64" r="36" fill="url(#crumb)" opacity="0.95"/>
+
+  <!-- Cookie bite (removed) -->
+  <circle cx="90" cy="42" r="14" fill="url(#bg)"/>
+
+  <!-- Cookie chips/dots -->
+  <circle cx="52" cy="54" r="4.5" fill="#6c5ce7" opacity="0.6"/>
+  <circle cx="68" cy="72" r="4" fill="#6c5ce7" opacity="0.5"/>
+  <circle cx="56" cy="78" r="3.5" fill="#6c5ce7" opacity="0.4"/>
+  <circle cx="72" cy="52" r="3" fill="#6c5ce7" opacity="0.5"/>
+  <circle cx="48" cy="68" r="3" fill="#6c5ce7" opacity="0.35"/>
+
+  <!-- Sweep/clean arc (broom motion) -->
+  <path d="M 92 70 Q 102 64 96 50" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 98 74 Q 108 66 102 52" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+  <path d="M 86 66 Q 96 60 90 48" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+</svg>
