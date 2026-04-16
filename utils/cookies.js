@@ -111,20 +111,16 @@ export async function cleanDomain(domain) {
     return { deleted: 0, skipped: true, reason: 'greylisted' };
   }
 
-  // Delete cookies
-  const baseDomain = getBaseDomain(domain);
+  // Delete cookies ONLY for the specific domain that was closed.
+  // We must NOT clean the base domain (e.g., google.com) when a subdomain
+  // (e.g., analytics.google.com) is closed, as that would break other open
+  // subdomains like mail.google.com.
   const cookieNameFilter = match ? (match.cookieNames || []) : [];
-
-  // Delete for both the exact hostname and base domain
-  let totalDeleted = 0;
-  const domainsToClean = new Set([domain, baseDomain]);
-
-  for (const d of domainsToClean) {
-    totalDeleted += await deleteAllCookiesForDomain(d, cookieNameFilter);
-  }
+  let totalDeleted = await deleteAllCookiesForDomain(domain, cookieNameFilter);
 
   // Clean site data if enabled
-  if (totalDeleted > 0 || settings.cleanLocalStorage || settings.cleanCache) {
+  if (totalDeleted > 0 && (settings.cleanLocalStorage || settings.cleanCache ||
+      settings.cleanIndexedDB || settings.cleanServiceWorkers)) {
     await cleanSiteData(domain, settings);
   }
 

@@ -22,32 +22,39 @@ import { cleanDomain, countCookiesForHostname, manualCleanAll } from './utils/co
 
 let tabMap = {};           // tabId → hostname
 let domainTabCount = {};   // hostname → number of open tabs
-let initialized = false;
+let initPromise = null;    // Promise-based guard to prevent concurrent init
 
 /**
  * Rebuild tab tracking state from actual open tabs.
- * Called on every SW wake-up.
+ * Uses Promise guard to prevent concurrent initialization.
  */
 async function ensureInitialized() {
-  if (initialized) return;
-  initialized = true;
+  if (initPromise) return initPromise;
 
-  const tabs = await chrome.tabs.query({});
-  tabMap = {};
-  domainTabCount = {};
+  initPromise = (async () => {
+    const tabs = await chrome.tabs.query({});
+    tabMap = {};
+    domainTabCount = {};
 
-  for (const tab of tabs) {
-    const hostname = getHostname(tab.url);
-    if (hostname) {
-      tabMap[tab.id] = hostname;
-      domainTabCount[hostname] = (domainTabCount[hostname] || 0) + 1;
+    for (const tab of tabs) {
+      const hostname = getHostname(tab.url);
+      if (hostname) {
+        tabMap[tab.id] = hostname;
+        domainTabCount[hostname] = (domainTabCount[hostname] || 0) + 1;
+      }
     }
-  }
 
-  await Promise.all([
-    saveTabMap(tabMap),
-    saveDomainTabCount(domainTabCount),
-  ]);
+    await Promise.all([
+      saveTabMap(tabMap),
+      saveDomainTabCount(domainTabCount),
+    ]);
+  })();
+
+  return initPromise;
+}
+
+function resetInit() {
+  initPromise = null;
 }
 
 // ─── Tab Event Handlers ──────────────────────────────────────────────────
@@ -65,7 +72,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 
   // Decrement old domain count
   if (oldHostname) {
-    domainTabCount[oldHostname] = Math.max(0, (domainTabCount[oldHostname] || 1) - 1);
+    domainTabCount[oldHostname] = Math.max(0, (domainTabCount[oldHostname] || 0) - 1);
 
     // If domain change cleanup is enabled and no more tabs open for old domain
     if (domainTabCount[oldHostname] === 0) {
@@ -117,7 +124,7 @@ chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
 
   // Clean up tracking
   delete tabMap[tabId];
-  domainTabCount[hostname] = Math.max(0, (domainTabCount[hostname] || 1) - 1);
+  domainTabCount[hostname] = Math.max(0, (domainTabCount[hostname] || 0) - 1);
 
   const noMoreTabs = domainTabCount[hostname] === 0;
   if (noMoreTabs) {
@@ -181,7 +188,7 @@ async function performCleanup(hostname) {
   if (result.deleted > 0) {
     const settings = await getSettings();
     if (settings.showNotifications) {
-      showNotification(hostname, result.deleted);
+      notifyCleaned(hostname, result.deleted);
     }
   }
 }
@@ -242,14 +249,18 @@ async function updateBadge(tabId) {
 
 // ─── Notifications ───────────────────────────────────────────────────────
 
-function showNotification(domain, count) {
+function showNotification(title, message) {
   chrome.notifications.create(`clean-${Date.now()}`, {
     type: 'basic',
     iconUrl: 'icons/icon128.png',
     title: 'AutoCrumb',
-    message: `Deleted ${count} cookie${count !== 1 ? 's' : ''} for ${domain}`,
+    message: typeof message === 'string' ? message : String(message),
     silent: true,
   });
+}
+
+function notifyCleaned(domain, count) {
+  showNotification('AutoCrumb', `Deleted ${count} cookie${count !== 1 ? 's' : ''} for ${domain}`);
 }
 
 // ─── Context Menus ───────────────────────────────────────────────────────
@@ -316,7 +327,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     case 'autocrumb-clean-now':
       const result = await manualCleanAll(false);
       if (result.deleted > 0) {
-        showNotification('all sites', result.deleted);
+        notifyCleaned('all sites', result.deleted);
       }
       break;
   }
@@ -351,7 +362,7 @@ chrome.commands.onCommand.addListener(async (command) => {
     case 'clean-now': {
       const result = await manualCleanAll(false);
       if (result.deleted > 0) {
-        showNotification('all sites', result.deleted);
+        notifyCleaned('all sites', result.deleted);
       }
       break;
     }
@@ -456,7 +467,7 @@ async function handleMessage(message) {
 // ─── Startup / Install ──────────────────────────────────────────────────
 
 chrome.runtime.onInstalled.addListener(async (details) => {
-  initialized = false;
+  resetInit();
   await ensureInitialized();
   setupContextMenus();
 
@@ -467,7 +478,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 });
 
 chrome.runtime.onStartup.addListener(async () => {
-  initialized = false;
+  resetInit();
   await ensureInitialized();
   setupContextMenus();
 
@@ -481,7 +492,7 @@ chrome.runtime.onStartup.addListener(async () => {
 async function startupClean() {
   const result = await manualCleanAll(false);
   if (result.deleted > 0) {
-    showNotification('Startup cleanup', result.deleted);
+    notifyCleaned('startup', result.deleted);
     await addActivityLog({
       type: 'startup_clean',
       cookiesDeleted: result.deleted,

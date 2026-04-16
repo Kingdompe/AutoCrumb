@@ -5,8 +5,13 @@
 function $(id) { return document.getElementById(id); }
 function $$(sel) { return document.querySelectorAll(sel); }
 
-function sendMessage(message) {
-  return chrome.runtime.sendMessage(message);
+async function sendMessage(message) {
+  try {
+    return await chrome.runtime.sendMessage(message);
+  } catch (err) {
+    console.error('AutoCrumb: sendMessage failed', message.action, err);
+    return null;
+  }
 }
 
 // ─── Tab Navigation ──────────────────────────────────────────────────────
@@ -37,6 +42,7 @@ const SETTING_KEYS = [
 
 async function loadSettings() {
   const settings = await sendMessage({ action: 'getSettings' });
+  if (!settings) return;
 
   for (const key of SETTING_KEYS) {
     const el = $(`setting-${key}`);
@@ -67,7 +73,7 @@ function setupSettingsListeners() {
 
 async function loadExpressions() {
   const expressions = await sendMessage({ action: 'getExpressions' });
-  renderExpressions(expressions);
+  renderExpressions(expressions || []);
 }
 
 function renderExpressions(expressions, filter = '') {
@@ -196,6 +202,9 @@ async function loadStats() {
     sendMessage({ action: 'getActivityLog' }),
   ]);
 
+  if (!stats || !expressions) return;
+  const safeLog = log || [];
+
   $('stat-total').textContent = stats.totalCookiesDeleted.toLocaleString();
   $('stat-cleanups').textContent = stats.totalCleanups.toLocaleString();
   $('stat-domains').textContent = Object.keys(stats.deletionsByDomain).length.toLocaleString();
@@ -225,10 +234,10 @@ async function loadStats() {
 
   // Activity log
   const logContainer = $('full-activity-log');
-  if (!log || log.length === 0) {
+  if (!safeLog || safeLog.length === 0) {
     logContainer.innerHTML = '<div class="empty-state">No activity yet</div>';
   } else {
-    logContainer.innerHTML = log.map(entry => {
+    logContainer.innerHTML = safeLog.map(entry => {
       const time = new Date(entry.timestamp).toLocaleString();
       const domain = entry.domain || (entry.domains ? `${entry.domains} sites` : 'manual');
       const typeLabel = entry.type === 'auto_clean' ? 'Auto' :

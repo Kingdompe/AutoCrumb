@@ -6,8 +6,19 @@
 
 function $(id) { return document.getElementById(id); }
 
-function sendMessage(message) {
-  return chrome.runtime.sendMessage(message);
+async function sendMessage(message) {
+  try {
+    return await chrome.runtime.sendMessage(message);
+  } catch (err) {
+    console.error('AutoCrumb: sendMessage failed', message.action, err);
+    return null;
+  }
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
 }
 
 function timeAgo(timestamp) {
@@ -25,6 +36,7 @@ function timeAgo(timestamp) {
 
 async function render() {
   const data = await sendMessage({ action: 'getPopupData' });
+  if (!data) return; // Background SW not ready
 
   // Enabled state
   const toggleBtn = $('btn-toggle');
@@ -60,7 +72,7 @@ async function render() {
 
   // Activity log
   const log = await sendMessage({ action: 'getActivityLog' });
-  renderActivityLog(log);
+  renderActivityLog(log || []);
 }
 
 function renderSuggestions(data) {
@@ -114,9 +126,9 @@ function renderActivityLog(log) {
     const domain = entry.domain || (entry.domains ? `${entry.domains} sites` : 'unknown');
 
     item.innerHTML = `
-      <span class="activity-icon activity-icon--${entry.type}">${icon}</span>
-      <span class="activity-text">${entry.cookiesDeleted} cookies — ${domain}</span>
-      <span class="activity-time">${timeAgo(entry.timestamp)}</span>
+      <span class="activity-icon activity-icon--${escapeHtml(entry.type)}">${icon}</span>
+      <span class="activity-text">${escapeHtml(String(entry.cookiesDeleted))} cookies — ${escapeHtml(domain)}</span>
+      <span class="activity-time">${escapeHtml(timeAgo(entry.timestamp))}</span>
     `;
 
     container.appendChild(item);
