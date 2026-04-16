@@ -200,7 +200,9 @@ export async function importData(data) {
     for (const [storeId, entries] of Object.entries(cadExpressions)) {
       if (!Array.isArray(entries)) continue;
       for (const entry of entries) {
-        const pattern = entry.expression || entry.pattern || entry;
+        if (!entry) continue; // skip null/undefined entries
+        const pattern = (typeof entry === 'string') ? entry :
+          (entry.expression || entry.pattern || '');
         const type = (entry.listType === 'WHITE' || entry.type === 'whitelist')
           ? 'whitelist' : 'greylist';
         if (typeof pattern === 'string' && pattern.trim()) {
@@ -208,7 +210,7 @@ export async function importData(data) {
             pattern: pattern.trim().toLowerCase(),
             type,
             createdAt: Date.now(),
-            cookieNames: entry.cookieNames || [],
+            cookieNames: (entry && entry.cookieNames) || [],
           });
         }
       }

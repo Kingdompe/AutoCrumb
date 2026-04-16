@@ -8,8 +8,19 @@ const totalSteps = 4;
 function $(id) { return document.getElementById(id); }
 function $$(sel) { return document.querySelectorAll(sel); }
 
-function sendMessage(message) {
-  return chrome.runtime.sendMessage(message);
+async function sendMessage(message) {
+  try {
+    return await chrome.runtime.sendMessage(message);
+  } catch (err) {
+    console.error('AutoCrumb: sendMessage failed', message.action, err);
+    return null;
+  }
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
 }
 
 function updateUI() {
@@ -51,9 +62,9 @@ async function saveWhitelistSelections() {
   }
 }
 
-function goNext() {
+async function goNext() {
   if (currentStep === 1) {
-    saveWhitelistSelections();
+    await saveWhitelistSelections();
   }
 
   if (currentStep === totalSteps - 1) {
@@ -83,10 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Step dot navigation
   $$('.step-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
+    dot.addEventListener('click', async () => {
       const step = parseInt(dot.dataset.step);
       if (step <= currentStep + 1) {
-        if (currentStep === 1) saveWhitelistSelections();
+        if (currentStep === 1) await saveWhitelistSelections();
         currentStep = step;
         updateUI();
       }
@@ -106,8 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const item = document.createElement('label');
     item.className = 'quick-add-item';
     item.innerHTML = `
-      <input type="checkbox" class="quick-add-check" data-domain="${pattern}" checked>
-      <span class="quick-add-domain">${pattern}</span>
+      <input type="checkbox" class="quick-add-check" data-domain="${escapeHtml(pattern)}" checked>
+      <span class="quick-add-domain">${escapeHtml(pattern)}</span>
       <span class="quick-add-hint">Custom</span>
     `;
     list.appendChild(item);
